@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "reward-counseling",
+      "description": "A calm and supportive counseling session environment.",
+      "imageUrl": "https://images.unsplash.com/photo-1551847677-dc82d764e1eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0aGVyYXB5JTIwc2Vzc2lvbnxlbnwwfHx8fDE3NTkwODA5OTl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "therapy session"
+    },
+    {
+      "id": "reward-fitness",
+      "description": "A person practicing yoga in a serene setting.",
+      "imageUrl": "https://images.unsplash.com/photo-1705999383657-c39b4d47ec2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMHlvZ2F8ZW58MHx8fHwxNzU5MDU3Njg4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman yoga"
+    },
+    {
+      "id": "reward-ngo",
+      "description": "Hands holding a plant, symbolizing growth and charity.",
+      "imageUrl": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaGFyaXR5JTIwZG9uYXRpb258ZW58MHx8fHwxNzU5MTIyNzQxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "charity donation"
+    },
+    {
+      "id": "reward-meditation",
+      "description": "A person meditating peacefully by the water.",
+      "imageUrl": "https://images.unsplash.com/photo-1607551848581-7ee851bf978b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwZXJzb24lMjBtZWRpdGF0aW5nfGVufDB8fHx8MTc1OTA4Mzg3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person meditating"
+    }
+  ]
 }
