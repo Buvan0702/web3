@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { provideContextualEmotionalSupport, ProvideContextualEmotionalSupportOutput } from '@/ai/flows/provide-contextual-emotional-support';
 import { useAppContext } from '@/context/app-context';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Sparkles, Brain, Heart, CheckCircle, Lock } from 'lucide-react';
+import { Loader2, Sparkles, Brain, Heart, CheckCircle, Lock, ShieldCheck, DatabaseZap, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useCallback } from 'react';
 
 type SimulationStep = {
   text: string;
+  description: string;
+  icon: React.ReactNode;
   status: 'pending' | 'loading' | 'done';
 };
 
@@ -24,14 +25,13 @@ export default function DashboardPage() {
   const [simulationSteps, setSimulationSteps] = useState<SimulationStep[]>([]);
 
   const initialSimulationSteps: SimulationStep[] = [
-    { text: 'Encrypting interaction data...', status: 'pending' },
-    { text: 'Storing on decentralized network (IPFS)...', status: 'pending' },
-    { text: 'Minting Wellness Token on Polygon...', status: 'pending' },
+    { text: 'Encrypt Data', description: 'Your personal data is encrypted on your device before transmission, ensuring only you can access it.', icon: <ShieldCheck className="h-5 w-5" />, status: 'pending' },
+    { text: 'Store on IPFS', description: 'The encrypted data is stored on the InterPlanetary File System (IPFS), a decentralized network, not on a central server.', icon: <DatabaseZap className="h-5 w-5" />, status: 'pending' },
+    { text: 'Mint Wellness Token', description: 'A "Wellness Token" is minted on the Polygon blockchain as a verifiable and rewarding proof of your check-in.', icon: <Star className="h-5 w-5" />, status: 'pending' },
   ];
 
   const memoizedAddWellnessTokens = useCallback(addWellnessTokens, [addWellnessTokens]);
   const memoizedToast = useCallback(toast, [toast]);
-
 
   useEffect(() => {
     if (simulationSteps.length > 0 && simulationSteps.some(s => s.status === 'loading')) {
@@ -53,7 +53,7 @@ export default function DashboardPage() {
             }
             return newSteps;
           });
-        }, 1200);
+        }, 1500); // Increased delay for better visualization
         return () => clearTimeout(timer);
       }
     }
@@ -161,22 +161,30 @@ export default function DashboardPage() {
         {simulationSteps.length > 0 && (
           <Card className="lg:col-span-3">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Lock size={20}/> Decentralized & Secure</CardTitle>
-              <CardDescription>We respect your privacy. Your data is encrypted and stored decentrally.</CardDescription>
+              <CardTitle className="flex items-center gap-2"><Lock size={20}/> Your Data, Your Control: A Web3 Simulation</CardTitle>
+              <CardDescription>We respect your privacy. This simulation shows how your data could be handled decentrally.</CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-3">
+              <div className="flex flex-col md:flex-row gap-6">
                 {simulationSteps.map((step, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    {step.status === 'pending' && <Loader2 className="h-5 w-5 text-muted-foreground animate-pulse" />}
-                    {step.status === 'loading' && <Loader2 className="h-5 w-5 text-accent animate-spin" />}
-                    {step.status === 'done' && <CheckCircle className="h-5 w-5 text-green-500" />}
-                    <span className={step.status === 'done' ? 'text-muted-foreground line-through' : ''}>
-                      {step.text}
-                    </span>
-                  </li>
+                  <div key={index} className="flex-1 flex gap-4 items-start">
+                    <div className="flex flex-col items-center gap-2">
+                       <div className={`flex items-center justify-center h-10 w-10 rounded-full ${step.status === 'done' ? 'bg-green-500/20 text-green-500' : 'bg-accent/20 text-accent'}`}>
+                        {step.status === 'pending' && <div className="h-5 w-5 text-muted-foreground">{step.icon}</div>}
+                        {step.status === 'loading' && <Loader2 className="h-5 w-5 animate-spin" />}
+                        {step.status === 'done' && <CheckCircle className="h-5 w-5" />}
+                       </div>
+                       {index < simulationSteps.length - 1 && (
+                          <div className={`flex-1 w-px h-full ${step.status === 'done' ? 'bg-green-500' : 'bg-border'}`} />
+                       )}
+                    </div>
+                    <div className="flex-1 pt-1.5">
+                      <p className={`font-semibold ${step.status === 'done' ? 'text-foreground' : 'text-muted-foreground'}`}>{step.text}</p>
+                      <p className="text-sm text-muted-foreground">{step.description}</p>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </CardContent>
           </Card>
         )}
