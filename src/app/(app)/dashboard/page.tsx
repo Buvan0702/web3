@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Sparkles, Brain, Heart, CheckCircle, Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useCallback } from 'react';
 
 type SimulationStep = {
   text: string;
@@ -28,6 +29,10 @@ export default function DashboardPage() {
     { text: 'Minting Wellness Token on Polygon...', status: 'pending' },
   ];
 
+  const memoizedAddWellnessTokens = useCallback(addWellnessTokens, [addWellnessTokens]);
+  const memoizedToast = useCallback(toast, [toast]);
+
+
   useEffect(() => {
     if (simulationSteps.length > 0 && simulationSteps.some(s => s.status === 'loading')) {
       const currentIndex = simulationSteps.findIndex(s => s.status === 'loading');
@@ -40,8 +45,8 @@ export default function DashboardPage() {
               newSteps[currentIndex + 1].status = 'loading';
             } else {
               // All steps are done
-              addWellnessTokens(1);
-              toast({
+              memoizedAddWellnessTokens(1);
+              memoizedToast({
                 title: 'Success!',
                 description: 'You earned 1 Wellness Token for checking in.',
               });
@@ -52,7 +57,7 @@ export default function DashboardPage() {
         return () => clearTimeout(timer);
       }
     }
-  }, [simulationSteps, addWellnessTokens, toast]);
+  }, [simulationSteps, memoizedAddWellnessTokens, memoizedToast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
