@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, BotMessageSquare, BrainCircuit, Lock, Coins } from 'lucide-react';
+import { ArrowRight, BotMessageSquare, BrainCircuit, Lock, Coins, ShieldCheck, DatabaseZap, Star } from 'lucide-react';
 import Link from 'next/link';
 
 export default function WelcomePage() {
@@ -51,29 +51,65 @@ export default function WelcomePage() {
           </section>
 
           <section className="py-16 md:py-24 lg:py-32">
-            <div className="grid gap-8 md:grid-cols-3">
-              <div className="flex flex-col items-center text-center gap-2">
-                <div className="p-3 rounded-full bg-primary/20">
-                    <BrainCircuit className="h-8 w-8 text-primary" />
+            <div className="grid gap-12 md:grid-cols-3">
+              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all">
+                <div className="p-4 rounded-full bg-primary/20">
+                    <BrainCircuit className="h-10 w-10 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold">Truly Personalized AI</h3>
                 <p className="text-muted-foreground">Your AI Twin evolves with you, remembering your journey to provide deeply contextual support.</p>
               </div>
-              <div className="flex flex-col items-center text-center gap-2">
-                <div className="p-3 rounded-full bg-primary/20">
-                    <Lock className="h-8 w-8 text-primary" />
+              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all">
+                <div className="p-4 rounded-full bg-primary/20">
+                    <Lock className="h-10 w-10 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold">Decentralized & Private</h3>
                 <p className="text-muted-foreground">Your data is encrypted and stored on a decentralized network. You own your story.</p>
               </div>
-              <div className="flex flex-col items-center text-center gap-2">
-                <div className="p-3 rounded-full bg-primary/20">
-                    <Coins className="h-8 w-8 text-primary" />
+              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-lg border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all">
+                <div className="p-4 rounded-full bg-primary/20">
+                    <Coins className="h-10 w-10 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold">Rewarding Wellness</h3>
                 <p className="text-muted-foreground">Earn Wellness Tokens for building healthy habits and redeem them for real-world benefits.</p>
               </div>
             </div>
+          </section>
+
+          <section className="py-16 md:py-24 lg:py-32">
+             <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How It Works: The Web3 Difference</h2>
+                <p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">We've engineered a system where your privacy isn't an afterthought—it's the foundation.</p>
+             </div>
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                  <div className="relative flex flex-col items-center text-center">
+                     <div className="p-4 mb-4 rounded-full bg-primary/20 ring-4 ring-primary/10">
+                        <ShieldCheck className="h-10 w-10 text-primary" />
+                     </div>
+                     <h3 className="text-xl font-bold">1. On-Device Encryption</h3>
+                     <p className="text-muted-foreground mt-2">Your data is encrypted on your device before it ever leaves. Only you hold the key.</p>
+                  </div>
+                  <div className="relative hidden md:block">
+                     <ArrowRight className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-12 w-12 text-muted-foreground/30 mt-5" />
+                  </div>
+                  <div className="relative flex flex-col items-center text-center">
+                     <div className="p-4 mb-4 rounded-full bg-primary/20 ring-4 ring-primary/10">
+                        <DatabaseZap className="h-10 w-10 text-primary" />
+                     </div>
+                     <h3 className="text-xl font-bold">2. Decentralized Storage</h3>
+                     <p className="text-muted-foreground mt-2">Your encrypted data is stored on IPFS, a distributed network, not on a central server.</p>
+                  </div>
+                  <div className="relative hidden md:block">
+                     <ArrowRight className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-12 w-12 text-muted-foreground/30 mt-5" />
+                  </div>
+                  <div className="relative flex flex-col items-center text-center">
+                     <div className="p-4 mb-4 rounded-full bg-primary/20 ring-4 ring-primary/10">
+                        <Star className="h-10 w-10 text-primary" />
+                     </div>
+                     <h3 className="text-xl font-bold">3. Proof of Wellness</h3>
+                     <p className="text-muted-foreground mt-2">A "Wellness Token" is minted on-chain as a secure, immutable record of your progress.</p>
+                  </div>
+             </div>
           </section>
         </div>
       </main>
