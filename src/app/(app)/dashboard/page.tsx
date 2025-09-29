@@ -6,7 +6,7 @@ import { useAppContext } from '@/context/app-context';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Sparkles, Brain, Heart, CheckCircle, Lock, ShieldCheck, DatabaseZap, Star, ArrowRight } from 'lucide-react';
+import { Loader2, Sparkles, Brain, Heart, CheckCircle, Lock, ShieldCheck, DatabaseZap, Star, ArrowRight, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 type SimulationStep = {
@@ -50,8 +50,8 @@ export default function DashboardPage() {
     },
   ];
 
-  const stableAddWellnessTokens = useCallback(addWellnessTokens, []);
-  const stableToast = useCallback(toast, []);
+  const stableAddWellnessTokens = useCallback(addWellnessTokens, [addWellnessTokens]);
+  const stableToast = useCallback(toast, [toast]);
 
   const runSimulation = useCallback(() => {
     if (simulationSteps.length > 0 && simulationSteps.some(s => s.status === 'loading')) {
@@ -114,25 +114,28 @@ export default function DashboardPage() {
   
   const getStatusColor = (status: SimulationStep['status']) => {
     if (status === 'done') return 'border-green-500/50 bg-green-500/10';
-    if (status === 'loading') return 'border-blue-500/50 bg-blue-500/10 animate-pulse';
+    if (status === 'loading') return 'border-primary/50 bg-primary/10 animate-pulse';
     return 'border-border bg-card';
   };
   
   const getStatusIcon = (status: SimulationStep['status']) => {
-    if (status === 'loading') return <Loader2 className="h-5 w-5 animate-spin text-blue-500" />;
+    if (status === 'loading') return <Loader2 className="h-5 w-5 animate-spin text-primary" />;
     if (status === 'done') return <CheckCircle className="h-5 w-5 text-green-500" />;
     return <Lock className="h-5 w-5 text-muted-foreground" />;
   };
 
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6 animate-fade-in-up">
       <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">Dashboard</h1>
+        <h1 className="font-semibold text-lg md:text-2xl">Good morning, Alex</h1>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="md:col-span-2 lg:col-span-3 animate-fade-in-up">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Card className="md:col-span-2 lg:col-span-3">
           <CardHeader>
-            <CardTitle>Your AI Mental Health Twin</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <MessageSquare className="text-primary h-6 w-6"/>
+              Your AI Mental Health Twin
+            </CardTitle>
             <CardDescription>How are you feeling today? Share your thoughts to get personalized support.</CardDescription>
           </CardHeader>
           <form onSubmit={handleSubmit}>
@@ -143,6 +146,7 @@ export default function DashboardPage() {
                 onChange={(e) => setInput(e.target.value)}
                 rows={4}
                 disabled={isLoading}
+                className="bg-secondary/50 border-border"
               />
             </CardContent>
             <CardFooter className="flex justify-end">
@@ -207,8 +211,8 @@ export default function DashboardPage() {
                        <Card className={`flex-grow transition-all duration-500 ${getStatusColor(step.status)}`}>
                           <CardHeader className="flex flex-row items-center justify-between">
                             <div className="flex items-center gap-4">
-                              <div className={`flex items-center justify-center h-12 w-12 rounded-lg ${step.status === 'done' ? 'bg-green-500/20' : step.status === 'loading' ? 'bg-blue-500/20' : 'bg-accent/10'}`}>
-                                {step.status === 'done' ? <CheckCircle className="h-8 w-8 text-green-500"/> : step.status === 'loading' ? <Loader2 className="h-8 w-8 animate-spin text-blue-500"/> : <div className="text-muted-foreground">{step.icon}</div>}
+                              <div className={`flex items-center justify-center h-12 w-12 rounded-lg ${step.status === 'done' ? 'bg-green-500/20' : step.status === 'loading' ? 'bg-primary/20' : 'bg-accent'}`}>
+                                {step.status === 'done' ? <CheckCircle className="h-8 w-8 text-green-500"/> : step.status === 'loading' ? <Loader2 className="h-8 w-8 animate-spin text-primary"/> : <div className="text-muted-foreground">{step.icon}</div>}
                               </div>
                               <CardTitle className="text-base">{step.title}</CardTitle>
                             </div>
