@@ -49,38 +49,34 @@ export default function DashboardPage() {
       status: 'pending' 
     },
   ];
-
-  const stableAddWellnessTokens = useCallback(addWellnessTokens, [addWellnessTokens]);
-  const stableToast = useCallback(toast, [toast]);
-
-  const runSimulation = useCallback(() => {
-    if (simulationSteps.length > 0 && simulationSteps.some(s => s.status === 'loading')) {
-      const currentIndex = simulationSteps.findIndex(s => s.status === 'loading');
-      if (currentIndex !== -1) {
-        const timer = setTimeout(() => {
-          setSimulationSteps(prevSteps => {
-            const newSteps = [...prevSteps];
-            newSteps[currentIndex].status = 'done';
-            if (currentIndex < newSteps.length - 1) {
-              newSteps[currentIndex + 1].status = 'loading';
-            } else {
-              stableAddWellnessTokens(1);
-              stableToast({
-                title: 'Success!',
-                description: 'You earned 1 Wellness Token for checking in.',
-              });
-            }
-            return newSteps;
-          });
-        }, 2000); 
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [simulationSteps, stableAddWellnessTokens, stableToast]);
+  
+  const stableAddWellnessTokens = useCallback(addWellnessTokens, []);
+  const stableToast = useCallback(toast, []);
 
   useEffect(() => {
-    runSimulation();
-  }, [runSimulation]);
+    const currentIndex = simulationSteps.findIndex(s => s.status === 'loading');
+    if (currentIndex === -1) return;
+
+    const timer = setTimeout(() => {
+      setSimulationSteps(prevSteps => {
+        const newSteps = [...prevSteps];
+        newSteps[currentIndex].status = 'done';
+        
+        if (currentIndex < newSteps.length - 1) {
+          newSteps[currentIndex + 1].status = 'loading';
+        } else {
+          stableAddWellnessTokens(1);
+          stableToast({
+            title: 'Success!',
+            description: 'You earned 1 Wellness Token for checking in.',
+          });
+        }
+        return newSteps;
+      });
+    }, 2000); 
+
+    return () => clearTimeout(timer);
+  }, [simulationSteps, stableAddWellnessTokens, stableToast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
