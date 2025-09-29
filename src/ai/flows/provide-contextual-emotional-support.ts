@@ -59,6 +59,18 @@ Emotional State:
 Personalized Response:
 
 Coping Exercise:`,
+  config: {
+    safetySettings: [
+      {
+        category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_HARASSMENT',
+        threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+      },
+    ],
+  },
 });
 
 const provideContextualEmotionalSupportFlow = ai.defineFlow(

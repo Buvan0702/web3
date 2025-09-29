@@ -44,6 +44,18 @@ const prompt = ai.definePrompt({
   Keep the prompt concise and focused. The goal is to provide a focused question that triggers deep though about the user's mental wellbeing.
   Do not start with "Here is your prompt..."
   `,
+  config: {
+    safetySettings: [
+      {
+        category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_HARASSMENT',
+        threshold: 'BLOCK_MEDIUM_AND_ABOVE',
+      },
+    ],
+  },
 });
 
 const generatePersonalizedJournalingPromptsFlow = ai.defineFlow(
