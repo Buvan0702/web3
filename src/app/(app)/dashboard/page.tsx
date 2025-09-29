@@ -24,6 +24,7 @@ export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState<ProvideContextualEmotionalSupportOutput | null>(null);
   const [simulationSteps, setSimulationSteps] = useState<SimulationStep[]>([]);
+  const [showSimulation, setShowSimulation] = useState(false);
 
   const initialSimulationSteps: SimulationStep[] = [
     { 
@@ -49,6 +50,9 @@ export default function DashboardPage() {
     },
   ];
 
+  const stableAddWellnessTokens = useCallback(addWellnessTokens, []);
+  const stableToast = useCallback(toast, []);
+
   const runSimulation = useCallback(() => {
     if (simulationSteps.length > 0 && simulationSteps.some(s => s.status === 'loading')) {
       const currentIndex = simulationSteps.findIndex(s => s.status === 'loading');
@@ -60,8 +64,8 @@ export default function DashboardPage() {
             if (currentIndex < newSteps.length - 1) {
               newSteps[currentIndex + 1].status = 'loading';
             } else {
-              addWellnessTokens(1);
-              toast({
+              stableAddWellnessTokens(1);
+              stableToast({
                 title: 'Success!',
                 description: 'You earned 1 Wellness Token for checking in.',
               });
@@ -72,7 +76,7 @@ export default function DashboardPage() {
         return () => clearTimeout(timer);
       }
     }
-  }, [simulationSteps, addWellnessTokens, toast]);
+  }, [simulationSteps, stableAddWellnessTokens, stableToast]);
 
   useEffect(() => {
     runSimulation();
@@ -85,6 +89,7 @@ export default function DashboardPage() {
     setIsLoading(true);
     setAiResponse(null);
     setSimulationSteps([]);
+    setShowSimulation(false);
 
     try {
       const response = await provideContextualEmotionalSupport({ textInput: input });
@@ -93,6 +98,7 @@ export default function DashboardPage() {
       const steps = [...initialSimulationSteps];
       steps[0].status = 'loading';
       setSimulationSteps(steps);
+      setShowSimulation(true);
 
     } catch (error) {
       console.error(error);
@@ -124,7 +130,7 @@ export default function DashboardPage() {
         <h1 className="font-semibold text-lg md:text-2xl">Dashboard</h1>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card className="md:col-span-2 lg:col-span-3">
+        <Card className="md:col-span-2 lg:col-span-3 animate-fade-in-up">
           <CardHeader>
             <CardTitle>Your AI Mental Health Twin</CardTitle>
             <CardDescription>How are you feeling today? Share your thoughts to get personalized support.</CardDescription>
@@ -159,7 +165,7 @@ export default function DashboardPage() {
 
         {aiResponse && (
           <>
-            <Card>
+            <Card className="animate-fade-in-up" style={{animationDelay: '0.2s'}}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Detected Emotion</CardTitle>
                 <Heart className="h-4 w-4 text-muted-foreground" />
@@ -168,7 +174,7 @@ export default function DashboardPage() {
                 <div className="text-2xl font-bold capitalize">{aiResponse.emotionalState}</div>
               </CardContent>
             </Card>
-            <Card className="lg:col-span-2">
+            <Card className="lg:col-span-2 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Personalized Response</CardTitle>
                 <Brain className="h-4 w-4 text-muted-foreground" />
@@ -177,7 +183,7 @@ export default function DashboardPage() {
                 <p className="text-sm text-muted-foreground">{aiResponse.personalizedResponse}</p>
               </CardContent>
             </Card>
-            <Card className="lg:col-span-3">
+            <Card className="lg:col-span-3 animate-fade-in-up" style={{animationDelay: '0.4s'}}>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium">Suggested Coping Exercise</CardTitle>
               </CardHeader>
@@ -188,8 +194,8 @@ export default function DashboardPage() {
           </>
         )}
         
-        {simulationSteps.length > 0 && (
-          <Card className="lg:col-span-3">
+        {showSimulation && (
+          <Card className="lg:col-span-3 animate-fade-in-up" style={{animationDelay: '0.5s'}}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2"><Lock size={20}/> Your Data, Your Control: The Web3 Journey</CardTitle>
               <CardDescription>This simulation shows how your data is handled in a decentralized, private, and secure way.</CardDescription>

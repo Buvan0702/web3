@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard, BookText, HeartPulse, Trophy, BotMessageSquare } from 'lucide-react';
 import { useAppContext } from '@/context/app-context';
+import { ThemeSwitcher } from './theme-switcher';
 
 const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -73,7 +74,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
       <SidebarInset>
         <header className="flex h-12 items-center justify-between border-b bg-background/50 backdrop-blur-sm p-2 sm:p-4">
             <SidebarTrigger />
-            {/* Can add user profile / other header items here */}
+            <ThemeSwitcher />
         </header>
         {children}
       </SidebarInset>
